@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Consumer } from "../../context";
+import TextInputGroup from "../layout/TextInputGroup";
 import uuid from "uuid";
 
 class AddContact extends Component {
@@ -23,6 +24,13 @@ class AddContact extends Component {
     };
 
     dispatch({ type: "ADD_CONTACT", payload: newContact });
+
+    // Clear state after submitting
+    this.setState({
+      name: "",
+      email: "",
+      phone: ""
+    });
   };
 
   render() {
@@ -39,7 +47,29 @@ class AddContact extends Component {
               </div>
               <div className="card-body">
                 <form onSubmit={this.onSubmit.bind(this, dispatch)}>
-                  <div className="form-group">
+                  <TextInputGroup
+                    label="Name"
+                    name="name"
+                    placeholder="Enter Name..."
+                    value={name}
+                    onChange={this.onChange}
+                  />
+                  <TextInputGroup
+                    label="Email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter Email..."
+                    value={email}
+                    onChange={this.onChange}
+                  />
+                  <TextInputGroup
+                    label="Phone"
+                    name="phone"
+                    placeholder="Enter Phone..."
+                    value={phone}
+                    onChange={this.onChange}
+                  />
+                  {/* <div className="form-group">
                     <label htmlFor="name">Name</label>
                     <input
                       type="text"
@@ -66,8 +96,8 @@ class AddContact extends Component {
                       placeholder="Enter Phone..."
                       value={phone}
                       onChange={this.onChange}
-                    />
-                  </div>
+                    /> 
+                  </div>*/}
                   <input
                     type="submit"
                     value="Add Contact"
