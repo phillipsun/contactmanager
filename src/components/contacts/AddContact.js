@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Consumer } from "../../context";
 import TextInputGroup from "../layout/TextInputGroup";
-import uuid from "uuid";
+import axios from "axios";
 
 class AddContact extends Component {
   state = {
@@ -32,13 +32,14 @@ class AddContact extends Component {
     }
 
     const newContact = {
-      id: uuid(), //generates a unique id for us
       name, // same as name: name
       email,
       phone
     };
 
-    dispatch({ type: "ADD_CONTACT", payload: newContact });
+    axios
+      .post("https://jsonplaceholder.typicode.com/users", newContact)
+      .then(res => dispatch({ type: "ADD_CONTACT", payload: res.data }));
 
     // Clear state after submitting
     this.setState({
@@ -90,35 +91,6 @@ class AddContact extends Component {
                     onChange={this.onChange}
                     error={errors.phone}
                   />
-                  {/* <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      name="name"
-                      placeholder="Enter Name..."
-                      value={name}
-                      onChange={this.onChange}
-                    />
-                    <label htmlFor="email">Email</label>
-                    <input
-                      type="email"
-                      className="form-control form-control-lg"
-                      name="email"
-                      placeholder="Enter Email..."
-                      value={email}
-                      onChange={this.onChange}
-                    />
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      name="phone"
-                      placeholder="Enter Phone..."
-                      value={phone}
-                      onChange={this.onChange}
-                    /> 
-                  </div>*/}
                   <input
                     type="submit"
                     value="Add Contact"
